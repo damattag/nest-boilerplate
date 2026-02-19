@@ -1,0 +1,47 @@
+import { Controller, Get, Query } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { List{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import {
+  type List{{pascalCase name}}QuerySchema,
+  list{{pascalCase name}}QueryValidationPipe,
+} from '@/modules/{{dashCase name}}/infra/dtos';
+import {
+  ApiPaths,
+  SwaggerTags,
+} from '@/shared/libs/nest/config/swagger-constants';
+import { buildResponseMeta } from '@/shared/utils/build-response-meta';
+
+@ApiTags(SwaggerTags.{{constantCase name}})
+@Controller(ApiPaths.{{constantCase name}})
+@ApiBearerAuth()
+export class List{{pascalCase name}}Controller {
+  constructor(private readonly useCase: List{{pascalCase name}}UseCase) {}
+
+  @Get()
+  @ApiOperation({ summary: 'List {{lowerCase name}}' })
+  @ApiResponse({ status: 200, description: 'List of {{lowerCase name}}' })
+  async handle(
+    @Query(list{{pascalCase name}}QueryValidationPipe) query: List{{pascalCase name}}QuerySchema,
+  ) {
+    const { page, limit } = query;
+    
+    const { data, total } = await this.useCase.execute(query);
+
+    const meta = buildResponseMeta({
+      total,
+      page,
+      limit,
+      listed: data.length,
+    });
+
+    return {
+      data,
+      meta,
+    };
+  }
+}

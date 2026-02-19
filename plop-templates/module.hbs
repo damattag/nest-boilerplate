@@ -1,0 +1,19 @@
+import { Module } from '@nestjs/common';
+import * as useCases from './application/use-cases';
+import * as controllers from './infra/controllers';
+import { DatabaseModule } from '@/shared/database/database.module';
+import { Prisma{{pascalCase name}}Repository } from './infra/database/repositories/{{dashCase name}}.repository';
+import { I{{pascalCase name}}Repository } from './application/repositories';
+
+@Module({
+  imports: [DatabaseModule],
+  controllers: Object.values(controllers),
+  providers: [
+    ...Object.values(useCases),
+    {
+      provide: I{{pascalCase name}}Repository,
+      useClass: Prisma{{pascalCase name}}Repository,
+    },
+  ],
+})
+export class {{pascalCase name}}Module {}

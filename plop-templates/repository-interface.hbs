@@ -1,0 +1,36 @@
+import type { {{pascalCase name}} } from '@/modules/{{dashCase name}}/domain';
+import type { OrderByInput, PaginationInput } from '@/shared/types/global';
+
+export interface Find{{pascalCase name}}ByIdInput {
+  id: string;
+}
+
+export interface Delete{{pascalCase name}}Input {
+  id: string;
+}
+
+interface List{{pascalCase name}}Filters {
+  createdAtStartDate?: Date;
+  createdAtEndDate?: Date;
+}
+
+export const ORDER_BY_{{constantCase name}}_FIELDS_ENUM = [
+  'id',
+  'createdAt',
+] as const;
+
+export type OrderBy{{pascalCase name}}FieldsEnum =
+  (typeof ORDER_BY_{{constantCase name}}_FIELDS_ENUM)[number];
+
+export type List{{pascalCase name}}Input = PaginationInput &
+  List{{pascalCase name}}Filters &
+  OrderByInput<{{pascalCase name}}, OrderBy{{pascalCase name}}FieldsEnum>;
+
+export abstract class I{{pascalCase name}}Repository {
+  abstract create(input: {{pascalCase name}}): Promise<void>;
+  abstract findById(input: Find{{pascalCase name}}ByIdInput): Promise<{{pascalCase name}} | null>;
+  abstract list(input: List{{pascalCase name}}Input): Promise<{{pascalCase name}}[]>;
+  abstract count(input: List{{pascalCase name}}Input): Promise<number>;
+  abstract delete(input: Delete{{pascalCase name}}Input): Promise<void>;
+  abstract update(input: {{pascalCase name}}): Promise<void>;
+}

@@ -1,0 +1,22 @@
+import type { Prisma, {{pascalCase name}} as Prisma{{pascalCase name}} } from '@/generated/prisma/client';
+import { {{pascalCase name}} } from '@/modules/{{dashCase name}}/domain';
+
+export class {{pascalCase name}}Mapper {
+  static toDomain(data: Prisma{{pascalCase name}}): {{pascalCase name}} {
+    return {{pascalCase name}}.create({
+      id: data.id,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      deletedAt: data.deletedAt,
+    });
+  }
+
+  static toPersistence(data: {{pascalCase name}}): Prisma.{{pascalCase name}}UncheckedCreateInput {
+    return {
+      id: data.id,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      deletedAt: data.deletedAt,
+    };
+  }
+}

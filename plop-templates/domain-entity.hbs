@@ -1,0 +1,43 @@
+import { randomUUID } from 'node:crypto';
+
+export interface {{pascalCase name}}Props {
+  id: string;
+
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+}
+
+type Create{{pascalCase name}}Input = Optional<
+  {{pascalCase name}}Props,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
+
+type Update{{pascalCase name}}Input = Partial<
+  Omit<{{pascalCase name}}Props, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>
+>;
+
+export class {{pascalCase name}} implements {{pascalCase name}}Props {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
+
+  protected constructor(props: {{pascalCase name}}Props) {
+    Object.assign(this, props);
+  }
+
+  static create(props: Create{{pascalCase name}}Input): {{pascalCase name}} {
+    return new {{pascalCase name}}({
+      ...props,
+      id: props.id ?? randomUUID(),
+      createdAt: props.createdAt ?? new Date(),
+      updatedAt: props.updatedAt ?? new Date(),
+      deletedAt: props.deletedAt ?? null,
+    });
+  }
+
+  update(props: Update{{pascalCase name}}Input): void {
+    Object.assign(this, { ...props, updatedAt: new Date() });
+  }
+}

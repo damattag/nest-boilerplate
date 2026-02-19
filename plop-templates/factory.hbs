@@ -1,0 +1,12 @@
+import { {{pascalCase name}}, {{pascalCase name}}Props } from "@/modules/{{dashCase name}}/domain";
+import { faker } from "@faker-js/faker";
+
+export function make{{pascalCase name}}(overrrides: Partial<{{pascalCase name}}Props> = {}): {{pascalCase name}} {
+  return {{pascalCase name}}.create({
+    id: faker.string.uuid(),
+    createdAt: faker.date.past(),
+    updatedAt: faker.date.recent(),
+    deletedAt: null,
+    ...overrrides
+  })
+}

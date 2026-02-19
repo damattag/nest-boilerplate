@@ -1,0 +1,36 @@
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Create{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import {
+  type Create{{pascalCase name}}BodySchema,
+  create{{pascalCase name}}BodySwaggerSchema,
+  create{{pascalCase name}}BodyValidationPipe,
+} from '@/modules/{{dashCase name}}/infra/dtos';
+import {
+  ApiPaths,
+  SwaggerTags,
+} from '@/shared/libs/nest/config/swagger-constants';
+
+@ApiTags(SwaggerTags.{{constantCase name}})
+@Controller(ApiPaths.{{constantCase name}})
+@ApiBearerAuth()
+export class Create{{pascalCase name}}Controller {
+  constructor(private readonly useCase: Create{{pascalCase name}}UseCase) {}
+
+  @Post()
+  @ApiOperation({ summary: 'Create {{lowerCase name}}' })
+  @ApiCreatedResponse({ description: '{{pascalCase name}} created successfully' })
+  @ApiBody({ schema: create{{pascalCase name}}BodySwaggerSchema })
+  @HttpCode(HttpStatus.CREATED)
+  async handle(
+    @Body(create{{pascalCase name}}BodyValidationPipe) body: Create{{pascalCase name}}BodySchema,
+  ): Promise<void> {
+    await this.useCase.execute(body);
+  }
+}

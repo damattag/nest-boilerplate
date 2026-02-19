@@ -1,0 +1,34 @@
+import { Injectable } from '@nestjs/common';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { InvalidInputException } from '@/shared/exceptions';
+
+interface Delete{{pascalCase name}}UseCaseRequest {
+  id: string;
+}
+
+type Delete{{pascalCase name}}UseCaseResponse = void;
+
+@Injectable()
+export class Delete{{pascalCase name}}UseCase {
+  constructor(private readonly repository: I{{pascalCase name}}Repository) {}
+
+  async execute(
+    input: Delete{{pascalCase name}}UseCaseRequest,
+  ): Promise<Delete{{pascalCase name}}UseCaseResponse> {
+    const { id } = input;
+    
+    const exists = await this.repository.findById({ id });
+
+    if (!exists) {
+      throw new InvalidInputException({
+        message: '{{pascalCase name}} not found',
+        code: '{{constantCase name}}_NOT_FOUND',
+        data: {
+          id,
+        },
+      });
+    }
+
+    await this.repository.delete({ id });
+  }
+}

@@ -1,0 +1,138 @@
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@/generated/prisma/client';
+import type {
+  Delete{{pascalCase name}}Input,
+  Find{{pascalCase name}}ByIdInput,
+  I{{pascalCase name}}Repository,
+  List{{pascalCase name}}Input,
+  OrderBy{{pascalCase name}}FieldsEnum,
+} from '@/modules/{{dashCase name}}/application/repositories';
+import { type {{pascalCase name}} } from '@/modules/{{dashCase name}}/domain';
+import { {{pascalCase name}}Mapper } from '@/modules/{{dashCase name}}/infra/database/mappers';
+import { PrismaService } from '@/shared/database';
+import { OrderByInput } from '@/shared/types/global';
+import { buildPaginationQuery } from '@/shared/utils/build-pagination-query';
+
+@Injectable()
+export class Prisma{{pascalCase name}}Repository implements I{{pascalCase name}}Repository {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(input: {{pascalCase name}}): Promise<void> {
+    const data = {{pascalCase name}}Mapper.toPersistence(input);
+
+    await this.prisma.{{camelCase name}}.create({
+      data,
+    });
+  }
+
+  async findById(input: Find{{pascalCase name}}ByIdInput): Promise<{{pascalCase name}} | null> {
+    const { id } = input;
+
+    const entity = await this.prisma.{{camelCase name}}.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!entity) {
+      return null;
+    }
+
+    return {{pascalCase name}}Mapper.toDomain(entity);
+  }
+
+  async delete(input: Delete{{pascalCase name}}Input): Promise<void> {
+    const { id } = input;
+
+    await this.prisma.{{camelCase name}}.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async update(input: {{pascalCase name}}): Promise<void> {
+    const { id, ...data } = {{pascalCase name}}Mapper.toPersistence(input);
+
+    await this.prisma.{{camelCase name}}.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }
+
+  async list(input: List{{pascalCase name}}Input): Promise<{{pascalCase name}}[]> {
+    const { orderByDirection, orderByField } = input;
+
+    const where = this.buildWhereClause(input);
+    const { take, skip } = buildPaginationQuery(input);
+
+    const entities = await this.prisma.{{camelCase name}}.findMany({
+      where,
+      orderBy: this.buildOrderBy({ orderByDirection, orderByField }),
+      take,
+      skip,
+    });
+
+    return entities.map({{pascalCase name}}Mapper.toDomain);
+  }
+
+  async count(input: List{{pascalCase name}}Input): Promise<number> {
+    const where = this.buildWhereClause(input);
+
+    const count = await this.prisma.{{camelCase name}}.count({
+      where,
+    });
+
+    return count;
+  }
+
+  private buildWhereClause(input: List{{pascalCase name}}Input): Prisma.{{pascalCase name}}WhereInput {
+    const { createdAtEndDate, createdAtStartDate } = input;
+
+    return {
+      ...(createdAtStartDate && { createdAt: { gte: createdAtStartDate } }),
+      ...(createdAtEndDate && { createdAt: { lte: createdAtEndDate } }),
+      ...(createdAtStartDate &&
+        createdAtEndDate && {
+          createdAt: {
+            gte: createdAtStartDate,
+            lte: createdAtEndDate,
+          },
+        }),
+    };
+  }
+
+  private buildOrderBy(
+    input: OrderByInput<{{pascalCase name}}, OrderBy{{pascalCase name}}FieldsEnum>,
+  ): Prisma.{{pascalCase name}}OrderByWithRelationInput {
+    const { orderByDirection, orderByField } = input;
+
+    if (!orderByDirection || !orderByField) {
+      return {
+        id: 'asc',
+      };
+    }
+
+    const fieldMapper: Record<
+      OrderBy{{pascalCase name}}FieldsEnum,
+      keyof Prisma.{{pascalCase name}}OrderByWithRelationInput
+    > = {
+      id: 'id',
+      createdAt: 'createdAt',
+    };
+
+    const field = fieldMapper[orderByField];
+
+    if (!field) {
+      return {
+        id: 'asc',
+      };
+    }
+
+    return {
+      [field]: orderByDirection,
+    };
+  }
+}

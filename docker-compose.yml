@@ -1,0 +1,38 @@
+services:
+  api-dev:
+    profiles:
+      - dev
+    build:
+      dockerfile: Dev.Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - SERVER_PORT=3001
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+  api:
+    profiles:
+      - prod
+    build:
+      context: .
+    ports:
+      - "4001:4001"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - SERVER_PORT=4001
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

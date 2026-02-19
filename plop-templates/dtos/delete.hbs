@@ -1,0 +1,12 @@
+import { z } from 'zod';
+import { ZodValidationPipe } from '@/shared/http/pipes';
+
+const delete{{pascalCase name}}ParamSchema = z.object({
+  id: z.uuidv4(),
+});
+
+export const delete{{pascalCase name}}ParamValidationPipe = new ZodValidationPipe(
+  delete{{pascalCase name}}ParamSchema,
+);
+
+export type Delete{{pascalCase name}}ParamSchema = z.infer<typeof delete{{pascalCase name}}ParamSchema>;

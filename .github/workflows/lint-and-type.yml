@@ -1,0 +1,43 @@
+name: Lint and Typescript Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        node-version: [24.11.1]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Run Linter
+        run: pnpm run lint:ci
+
+      - name: Generate Prisma Client
+        run: pnpm run db:generate
+
+      - name: Run Type Check
+        run: pnpm run types:check

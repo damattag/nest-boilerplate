@@ -1,0 +1,35 @@
+import { Injectable } from '@nestjs/common';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { {{pascalCase name}} } from '@/modules/{{dashCase name}}/domain';
+import { InvalidInputException } from '@/shared/exceptions';
+
+interface Get{{pascalCase name}}ByIdUseCaseRequest {
+  id: string;
+}
+
+type Get{{pascalCase name}}ByIdUseCaseResponse = {{pascalCase name}};
+
+@Injectable()
+export class Get{{pascalCase name}}ByIdUseCase {
+  constructor(private readonly repository: I{{pascalCase name}}Repository) {}
+
+  async execute(
+    input: Get{{pascalCase name}}ByIdUseCaseRequest,
+  ): Promise<Get{{pascalCase name}}ByIdUseCaseResponse> {
+    const { id } = input;
+
+    const entity = await this.repository.findById({ id });
+
+    if (!entity) {
+      throw new InvalidInputException({
+        message: '{{pascalCase name}} not found',
+        code: '{{constantCase name}}_NOT_FOUND',
+        data: {
+          id,
+        },
+      });
+    }
+
+    return entity;
+  }
+}

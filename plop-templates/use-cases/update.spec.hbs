@@ -1,0 +1,49 @@
+import { make{{pascalCase name}} } from 'tests/factories';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { Update{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import { InvalidInputException } from '@/shared/exceptions';
+
+describe('Update{{pascalCase name}}UseCase', () => {
+  let sut: Update{{pascalCase name}}UseCase;
+  let repository: I{{pascalCase name}}Repository;
+
+  beforeEach(() => {
+    repository = {
+      findById: vi.fn(),
+      update: vi.fn(),
+    } as unknown as I{{pascalCase name}}Repository;
+
+    sut = new Update{{pascalCase name}}UseCase(repository);
+  });
+
+  it('should be able to update a {{dashCase name}}', async () => {
+    const entity = make{{pascalCase name}}({
+      // Add properties here
+    });
+
+    vi.mocked(repository.findById).mockResolvedValue(entity);
+
+    await sut.execute({
+      id: entity.id,
+      // Add properties here
+    });
+
+    expect(repository.findById).toHaveBeenCalledWith({ id: entity.id });
+    expect(repository.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: entity.id,
+        // Add updated properties here
+      }),
+    );
+  });
+
+  it('should not be able to update a non-existing {{dashCase name}}', async () => {
+    vi.mocked(repository.findById).mockResolvedValue(null);
+
+    await expect(
+      sut.execute({ id: 'non-existing-id' }),
+    ).rejects.toThrow(InvalidInputException);
+    expect(repository.update).not.toHaveBeenCalled();
+  });
+});

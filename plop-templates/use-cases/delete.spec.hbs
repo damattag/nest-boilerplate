@@ -1,0 +1,41 @@
+import { make{{pascalCase name}} } from 'tests/factories';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { Delete{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import { InvalidInputException } from '@/shared/exceptions';
+
+describe('Delete{{pascalCase name}}UseCase', () => {
+  let sut: Delete{{pascalCase name}}UseCase;
+  let repository: I{{pascalCase name}}Repository;
+
+  beforeEach(() => {
+    repository = {
+      findById: vi.fn(),
+      delete: vi.fn(),
+    } as unknown as I{{pascalCase name}}Repository;
+
+    sut = new Delete{{pascalCase name}}UseCase(repository);
+  });
+
+  it('should be able to delete a {{dashCase name}}', async () => {
+    const entity = make{{pascalCase name}}({
+      // Add properties here
+    });
+
+    vi.mocked(repository.findById).mockResolvedValue(entity);
+
+    await sut.execute({ id: entity.id });
+
+    expect(repository.findById).toHaveBeenCalledWith({ id: entity.id });
+    expect(repository.delete).toHaveBeenCalledWith({ id: entity.id });
+  });
+
+  it('should not be able to delete a non-existing {{dashCase name}}', async () => {
+    vi.mocked(repository.findById).mockResolvedValue(null);
+
+    await expect(sut.execute({ id: 'non-existing-id' })).rejects.toThrow(
+      InvalidInputException,
+    );
+    expect(repository.delete).not.toHaveBeenCalled();
+  });
+});

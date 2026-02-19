@@ -1,0 +1,91 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+  "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "src/modules/**",
+      "src/shared/**",
+      "src/app.module.ts",
+      "src/main.ts"
+    ]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
+    "useEditorconfig": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "complexity": {
+        "noArguments": "error",
+        "noUselessTypeConstraint": "error"
+      },
+      "correctness": {
+        "noConstAssign": "off",
+        "noGlobalObjectCalls": "off",
+        "noInvalidBuiltinInstantiation": "off",
+        "noInvalidConstructorSuper": "off",
+        "noSetterReturn": "off"
+      },
+      "style": {
+        "noCommonJs": "error",
+        "noNamespace": "error",
+        "useArrayLiterals": "error",
+        "useAsConstAssertion": "error",
+        "useBlockStatements": "off",
+        "useConst": "error"
+      },
+      "suspicious": {
+        "noClassAssign": "off",
+        "noExtraNonNullAssertion": "error",
+        "noFunctionAssign": "off",
+        "noImportAssign": "off",
+        "noMisleadingInstantiator": "error",
+        "noRedeclare": "off",
+        "noUnsafeDeclarationMerging": "error",
+        "noUnsafeNegation": "off",
+        "noVar": "error",
+        "noWith": "off",
+        "useGetterReturn": "off",
+        "useNamespaceKeyword": "error"
+      }
+    },
+    "includes": ["**", "!**/.eslintrc.js"]
+  },
+  "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    },
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    },
+    "globals": ["exports"]
+  },
+  "html": { "formatter": { "selfCloseVoidElements": "always" } }
+}

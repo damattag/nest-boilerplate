@@ -1,0 +1,22 @@
+import { Injectable } from '@nestjs/common';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { {{pascalCase name}} } from '@/modules/{{dashCase name}}/domain';
+
+interface Create{{pascalCase name}}UseCaseRequest {
+  // Add properties here
+}
+
+type Create{{pascalCase name}}UseCaseResponse = void;
+
+@Injectable()
+export class Create{{pascalCase name}}UseCase {
+  constructor(private readonly repository: I{{pascalCase name}}Repository) {}
+
+  async execute(
+    input: Create{{pascalCase name}}UseCaseRequest,
+  ): Promise<Create{{pascalCase name}}UseCaseResponse> {
+    const entity = {{pascalCase name}}.create(input);
+
+    await this.repository.create(entity);
+  }
+}

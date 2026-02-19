@@ -1,0 +1,26 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { Create{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+
+describe('Create{{pascalCase name}}UseCase', () => {
+  let sut: Create{{pascalCase name}}UseCase;
+  let repository: I{{pascalCase name}}Repository;
+
+  beforeEach(() => {
+    repository = {
+      create: vi.fn(),
+    } as unknown as I{{pascalCase name}}Repository;
+
+    sut = new Create{{pascalCase name}}UseCase(repository);
+  });
+
+  it('should be able to create a new {{dashCase name}}', async () => {
+    const input = {
+      // Add properties here
+    };
+
+    await sut.execute(input);
+
+    expect(repository.create).toHaveBeenCalledWith(expect.any({{pascalCase name}}));
+  });
+});

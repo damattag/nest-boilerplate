@@ -1,0 +1,30 @@
+name: Make a backup of the main branch
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  create_backup_branch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Delete old backup branch if exists
+        run: |
+          git fetch --all --prune --force
+          git branch -d backup || true
+          git push origin --delete backup || true
+
+      - name: Create backup from main branch
+        run: |
+          git switch main
+          git switch -c backup
+          git push --set-upstream origin backup

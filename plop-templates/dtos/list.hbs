@@ -1,0 +1,27 @@
+import { z } from 'zod';
+import { ORDER_BY_{{constantCase name}}_FIELDS_ENUM } from '@/modules/{{dashCase name}}/application/repositories';
+import { paginationSchema } from '@/shared/http/dtos';
+import { swaggerArrayResponse } from '@/shared/http/dtos/swagger-array-response';
+import { ZodValidationPipe } from '@/shared/http/pipes';
+import { ORDER_BY_DIRECTION_ENUM } from '@/shared/types/global';
+
+const list{{pascalCase name}}QuerySchema = paginationSchema.extend({
+  orderByField: z.enum(ORDER_BY_{{constantCase name}}_FIELDS_ENUM).default('id'),
+  orderByDirection: z.enum(ORDER_BY_DIRECTION_ENUM).default('asc'),
+});
+
+export const list{{pascalCase name}}QueryValidationPipe = new ZodValidationPipe(
+  list{{pascalCase name}}QuerySchema,
+);
+
+export type List{{pascalCase name}}QuerySchema = z.infer<typeof list{{pascalCase name}}QuerySchema>;
+
+const responseSchema = z.object({
+  // Add properties here
+});
+
+const { arraySchema, swaggerSchema } = swaggerArrayResponse(responseSchema);
+
+export type List{{pascalCase name}}ResponseSchema = z.infer<typeof arraySchema>;
+
+export const list{{pascalCase name}}ResponseSwaggerSchema = swaggerSchema;

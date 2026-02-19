@@ -1,0 +1,32 @@
+import { Controller, Get, Param } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Get{{pascalCase name}}ByIdUseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import {
+  type Get{{pascalCase name}}ByIdParamSchema,
+  get{{pascalCase name}}ByIdParamValidationPipe,
+} from '@/modules/{{dashCase name}}/infra/dtos';
+import {
+  ApiPaths,
+  SwaggerTags,
+} from '@/shared/libs/nest/config/swagger-constants';
+
+@ApiTags(SwaggerTags.{{constantCase name}})
+@Controller(ApiPaths.{{constantCase name}})
+@ApiBearerAuth()
+export class Get{{pascalCase name}}ByIdController {
+  constructor(private readonly useCase: Get{{pascalCase name}}ByIdUseCase) {}
+
+  @Get('/:id')
+  @ApiOperation({ summary: 'Get {{lowerCase name}} by id' })
+  @ApiResponse({ status: 200, description: '{{pascalCase name}} found' })
+  async handle(
+    @Param(get{{pascalCase name}}ByIdParamValidationPipe) params: Get{{pascalCase name}}ByIdParamSchema,
+  ) {
+    return await this.useCase.execute(params);
+  }
+}

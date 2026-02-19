@@ -1,0 +1,33 @@
+import { Controller, Delete, HttpCode, HttpStatus, Param } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Delete{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import {
+  type Delete{{pascalCase name}}ParamSchema,
+  delete{{pascalCase name}}ParamValidationPipe,
+} from '@/modules/{{dashCase name}}/infra/dtos';
+import {
+  ApiPaths,
+  SwaggerTags,
+} from '@/shared/libs/nest/config/swagger-constants';
+
+@ApiTags(SwaggerTags.{{constantCase name}})
+@Controller(ApiPaths.{{constantCase name}})
+@ApiBearerAuth()
+export class Delete{{pascalCase name}}Controller {
+  constructor(private readonly useCase: Delete{{pascalCase name}}UseCase) {}
+
+  @Delete('/:id')
+  @ApiOperation({ summary: 'Delete {{lowerCase name}}' })
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: '{{pascalCase name}} deleted' })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async handle(
+    @Param(delete{{pascalCase name}}ParamValidationPipe) params: Delete{{pascalCase name}}ParamSchema,
+  ): Promise<void> {
+    await this.useCase.execute(params);
+  }
+}

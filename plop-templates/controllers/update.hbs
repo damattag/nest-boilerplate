@@ -1,0 +1,39 @@
+import { Body, Controller, HttpCode, HttpStatus, Param, Put } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Update{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import {
+  type Update{{pascalCase name}}BodySchema,
+  type Update{{pascalCase name}}ParamSchema,
+  update{{pascalCase name}}BodySwaggerSchema,
+  update{{pascalCase name}}BodyValidationPipe,
+  update{{pascalCase name}}ParamValidationPipe,
+} from '@/modules/{{dashCase name}}/infra/dtos';
+import {
+  ApiPaths,
+  SwaggerTags,
+} from '@/shared/libs/nest/config/swagger-constants';
+
+@ApiTags(SwaggerTags.{{constantCase name}})
+@Controller(ApiPaths.{{constantCase name}})
+@ApiBearerAuth()
+export class Update{{pascalCase name}}Controller {
+  constructor(private readonly useCase: Update{{pascalCase name}}UseCase) {}
+
+  @Put(':id')
+  @ApiOperation({ summary: 'Update {{lowerCase name}}' })
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: '{{pascalCase name}} updated' })
+  @ApiBody({ schema: update{{pascalCase name}}BodySwaggerSchema })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async handle(
+    @Param(update{{pascalCase name}}ParamValidationPipe) param: Update{{pascalCase name}}ParamSchema,
+    @Body(update{{pascalCase name}}BodyValidationPipe) body: Update{{pascalCase name}}BodySchema,
+  ): Promise<void> {
+    await this.useCase.execute({ id: param.id, ...body });
+  }
+}

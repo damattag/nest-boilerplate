@@ -1,0 +1,39 @@
+import { make{{pascalCase name}} } from 'tests/factories';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { List{{pascalCase name}}UseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+
+describe('List{{pascalCase name}}UseCase', () => {
+  let sut: List{{pascalCase name}}UseCase;
+  let repository: I{{pascalCase name}}Repository;
+
+  beforeEach(() => {
+    repository = {
+      list: vi.fn(),
+      count: vi.fn(),
+    } as unknown as I{{pascalCase name}}Repository;
+
+    sut = new List{{pascalCase name}}UseCase(repository);
+  });
+
+  it('should be able to list {{dashCase name}}', async () => {
+    const entity = make{{pascalCase name}}({
+      // Add properties here
+    });
+
+    vi.mocked(repository.list).mockResolvedValue([entity]);
+    vi.mocked(repository.count).mockResolvedValue(1);
+
+    const input = {
+      page: 1,
+      limit: 10,
+    };
+
+    const result = await sut.execute(input);
+
+    expect(repository.list).toHaveBeenCalledWith(input);
+    expect(repository.count).toHaveBeenCalledWith(input);
+    expect(result.data).toEqual([entity]);
+    expect(result.total).toEqual(1);
+  });
+});

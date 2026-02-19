@@ -1,0 +1,27 @@
+import type { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { z } from 'zod';
+import { ZodValidationPipe } from '@/shared/http/pipes';
+
+const update{{pascalCase name}}ParamSchema = z.object({
+  id: z.uuidv4(),
+});
+
+export const update{{pascalCase name}}ParamValidationPipe = new ZodValidationPipe(
+  update{{pascalCase name}}ParamSchema,
+);
+
+export type Update{{pascalCase name}}ParamSchema = z.infer<typeof update{{pascalCase name}}ParamSchema>;
+
+const update{{pascalCase name}}BodySchema = z.object({
+  // Add properties here
+}).partial();
+
+export const update{{pascalCase name}}BodyValidationPipe = new ZodValidationPipe(
+  update{{pascalCase name}}BodySchema,
+);
+
+export type Update{{pascalCase name}}BodySchema = z.infer<typeof update{{pascalCase name}}BodySchema>;
+
+export const update{{pascalCase name}}BodySwaggerSchema = z.toJSONSchema(
+  update{{pascalCase name}}BodySchema,
+) as SchemasObject;

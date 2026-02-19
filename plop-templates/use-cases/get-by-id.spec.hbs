@@ -1,0 +1,39 @@
+import { make{{pascalCase name}} } from 'tests/factories';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { I{{pascalCase name}}Repository } from '@/modules/{{dashCase name}}/application/repositories';
+import { Get{{pascalCase name}}ByIdUseCase } from '@/modules/{{dashCase name}}/application/use-cases';
+import { InvalidInputException } from '@/shared/exceptions';
+
+describe('Get{{pascalCase name}}ByIdUseCase', () => {
+  let sut: Get{{pascalCase name}}ByIdUseCase;
+  let repository: I{{pascalCase name}}Repository;
+
+  beforeEach(() => {
+    repository = {
+      findById: vi.fn(),
+    } as unknown as I{{pascalCase name}}Repository;
+
+    sut = new Get{{pascalCase name}}ByIdUseCase(repository);
+  });
+
+  it('should be able to get a {{dashCase name}} by id', async () => {
+    const entity = make{{pascalCase name}}({
+      // Add properties here
+    });
+
+    vi.mocked(repository.findById).mockResolvedValue(entity);
+
+    const result = await sut.execute({ id: entity.id });
+
+    expect(repository.findById).toHaveBeenCalledWith({ id: entity.id });
+    expect(result).toEqual(entity);
+  });
+
+  it('should not be able to get a non-existing {{dashCase name}}', async () => {
+    vi.mocked(repository.findById).mockResolvedValue(null);
+
+    await expect(sut.execute({ id: 'non-existing-id' })).rejects.toThrow(
+      InvalidInputException,
+    );
+  });
+});
