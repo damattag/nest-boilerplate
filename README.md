@@ -6,8 +6,8 @@ Este é um boilerplate robusto para o desenvolvimento de backends de plataformas
 
 - **Framework**: [NestJS](https://nestjs.com/)
 - **Linguagem**: [TypeScript](https://www.typescriptlang.org/)
-- **ORM**: [Prisma](https://www.prisma.io/) (com adaptador para SQL Server)
-- **Banco de Dados**: SQL Server (configurado via Docker)
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Banco de Dados**: PostgreSQL 17 (configurado via Docker)
 - **Linting & Formatação**: [Biome](https://biomejs.dev/)
 - **Testes**: [Vitest](https://vitest.dev/)
 - **Autenticação**: Passport JWT & Bcryptjs
@@ -47,12 +47,21 @@ src/
 | `pnpm build` | Compila o projeto para o diretório `dist` |
 | `pnpm start` | Inicia a aplicação |
 | `pnpm start:dev` | Inicia a aplicação em modo *hot-reload* |
-| `pnpm gen` | Executa o gerador de módulos (**Plop**) |
+| `pnpm start:debug` | Inicia a aplicação em modo *debug* |
+| `pnpm start:prod` | Inicia a aplicação em produção |
+| `pnpm lint` | Executa o linting do projeto |
 | `pnpm lint:fix` | Corrige problemas de lint e formata o código com Biome |
+| `pnpm lint:ci` | Executa o linting no CI |
 | `pnpm test` | Executa a suíte de testes unitários com Vitest |
+| `pnpm test:watch` | Executa os testes em modo *watch* |
 | `pnpm test:coverage` | Gera relatório de cobertura de testes |
+| `pnpm types:check` | Executa a verificação de tipos |
 | `pnpm db:generate` | Sincroniza o cliente Prisma com o schema |
 | `pnpm db:pull` | Atualiza o schema Prisma a partir de um banco existente |
+| `pnpm db:migrate` | Executa as migrações em desenvolvimento |
+| `pnpm db:migrate:deploy` | Aplica migrações em produção |
+| `pnpm db:studio` | Abre o Prisma Studio |
+| `pnpm gen` | Executa o gerador de módulos (**Plop**) |
 
 ## 🏁 Começando
 
@@ -75,7 +84,7 @@ src/
 3. **Inicie a infraestrutura**:
    O projeto utiliza perfis de Docker Compose para facilitar o desenvolvimento:
    ```bash
-   # Para desenvolvimento (com SQL Server)
+   # Para desenvolvimento (com PostgreSQL)
    docker-compose --profile dev up -d
    ```
 
