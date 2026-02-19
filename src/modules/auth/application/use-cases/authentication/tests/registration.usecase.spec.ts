@@ -2,10 +2,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { IUsersRepository } from '@/modules/users/application/repositories';
 import { User } from '@/modules/users/domain';
 import { IHashService } from '@/shared/services/hash';
-import { CreateUserUseCase } from '../create.usecase';
+import { RegistrationUseCase } from '../registration.usecase';
 
-describe('CreateUserUseCase', () => {
-  let sut: CreateUserUseCase;
+describe('RegistrationUseCase', () => {
+  let sut: RegistrationUseCase;
   let usersRepository: IUsersRepository;
   let hashService: IHashService;
 
@@ -18,10 +18,10 @@ describe('CreateUserUseCase', () => {
       hash: vi.fn().mockResolvedValue('hashed-password'),
     } as unknown as IHashService;
 
-    sut = new CreateUserUseCase(usersRepository, hashService);
+    sut = new RegistrationUseCase(usersRepository, hashService);
   });
 
-  it('should be able to create a new user', async () => {
+  it('should be able to register a new user', async () => {
     const input = {
       name: 'John Doe',
       email: 'john@example.com',
@@ -33,11 +33,22 @@ describe('CreateUserUseCase', () => {
     expect(hashService.hash).toHaveBeenCalledWith('password123');
     expect(usersRepository.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: 'John Doe',
-        email: 'john@example.com',
+        name: input.name,
+        email: input.email,
         password: 'hashed-password',
       }),
     );
+  });
+
+  it('should call usersRepository.create with a User instance', async () => {
+    const input = {
+      name: 'John Doe',
+      email: 'john@example.com',
+      password: 'password123',
+    };
+
+    await sut.execute(input);
+
     expect(usersRepository.create).toHaveBeenCalledWith(expect.any(User));
   });
 });

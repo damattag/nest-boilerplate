@@ -36,7 +36,7 @@ export class DefaultFilter implements ExceptionFilter {
     response.status(status).json({
       status,
       code,
-      detail: message,
+      message,
       data,
       timestamp,
     });

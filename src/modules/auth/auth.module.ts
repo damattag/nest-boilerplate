@@ -13,11 +13,13 @@ import {
   LoginUseCase,
   PasswordRecoverRequestUseCase,
   RefreshUseCase,
+  RegistrationUseCase,
   ResetPasswordUseCase,
 } from './application/use-cases';
 import {
   LoginController,
   RefreshController,
+  RegistrationController,
   ResetPasswordController,
   ResetPasswordRequestController,
 } from './infra/controllers';
@@ -39,6 +41,7 @@ import { JwtStrategy } from './infra/strategies/bearer/jwt.strategy';
   ],
   controllers: [
     LoginController,
+    RegistrationController,
     RefreshController,
     ResetPasswordRequestController,
     ResetPasswordController,
@@ -60,6 +63,7 @@ import { JwtStrategy } from './infra/strategies/bearer/jwt.strategy';
 
     LoginUseCase,
     RefreshUseCase,
+    RegistrationUseCase,
     PasswordRecoverRequestUseCase,
     ResetPasswordUseCase,
   ],

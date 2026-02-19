@@ -101,7 +101,7 @@ export class DatabaseFilter implements ExceptionFilter {
     const payload = {
       status,
       code,
-      detail: message,
+      message,
       data,
       timestamp,
       ...(isProduction ? {} : { stack }),

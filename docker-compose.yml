@@ -20,6 +20,7 @@ services:
             - node_modules/
         - action: rebuild
           path: package.json
+    
 
   pg:
     profiles:
@@ -36,6 +37,11 @@ services:
       - POSTGRES_DB=${DB_DATABASE}
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api:
     profiles:

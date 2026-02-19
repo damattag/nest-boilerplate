@@ -51,7 +51,7 @@ export class ZodFilter implements ExceptionFilter {
     return response.status(status).json({
       status,
       code,
-      detail: message,
+      message,
       data: {
         body,
         params,

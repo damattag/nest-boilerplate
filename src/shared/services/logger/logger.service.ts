@@ -47,7 +47,7 @@ export class LoggerService {
       exception: {
         status: exception.status,
         code: exception.code,
-        detail: exception.message,
+        message: exception.message,
         data: exception.data,
         stack: exception.stack,
       },
@@ -65,7 +65,7 @@ export class LoggerService {
       exception: {
         status: exception.status,
         code: exception.code,
-        detail: exception.message,
+        message: exception.message,
         data: exception.data,
         stack: exception.stack,
       },
