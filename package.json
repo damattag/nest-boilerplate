@@ -1,8 +1,8 @@
 {
-  "name": "authentication_betmetrica",
+  "name": "nestjs_boilerplate",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "NestJS Boilerplate",
+  "author": "damattag",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -20,6 +20,7 @@
     "types:check": "tsc --noEmit",
     "db:pull": "prisma db pull",
     "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
     "gen": "plop module"
   },
   "dependencies": {
@@ -31,14 +32,15 @@
     "@nestjs/passport": "11.0.5",
     "@nestjs/platform-express": "11.1.11",
     "@nestjs/swagger": "11.2.3",
-    "@prisma/adapter-mssql": "7.2.0",
-    "@prisma/client": "7.2.0",
+    "@prisma/adapter-pg": "7.4.1",
+    "@prisma/client": "7.4.1",
     "@sendgrid/mail": "8.1.6",
     "@swc/cli": "0.7.9",
     "@swc/core": "1.15.8",
     "bcryptjs": "3.0.3",
     "dotenv": "17.2.3",
     "passport-jwt": "4.0.1",
+    "pg": "8.18.0",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
     "winston": "3.19.0",
@@ -52,11 +54,12 @@
     "@types/express": "5.0.0",
     "@types/node": "25.0.3",
     "@types/passport-jwt": "4.0.1",
+    "@types/pg": "8.16.0",
     "@types/supertest": "6.0.2",
     "@vitest/coverage-v8": "4.0.17",
     "globals": "16.0.0",
     "plop": "4.0.4",
-    "prisma": "7.2.0",
+    "prisma": "7.4.1",
     "source-map-support": "0.5.21",
     "supertest": "7.1.4",
     "ts-loader": "9.5.4",
@@ -65,7 +68,7 @@
     "typescript": "5.9.3",
     "unplugin-swc": "1.5.9",
     "vite-tsconfig-paths": "6.0.3",
-    "vitest": "4.0.16"
+    "vitest": "4.0.17"
   },
   "pnpm": {
     "overrides": {

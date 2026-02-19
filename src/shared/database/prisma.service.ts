@@ -4,7 +4,7 @@ import {
   type OnModuleDestroy,
   type OnModuleInit,
 } from '@nestjs/common';
-import { PrismaMssql } from '@prisma/adapter-mssql';
+import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@/generated/prisma/client';
 import { EnvService } from '@/shared/services/env/env.service';
 
@@ -14,7 +14,7 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   constructor(env: EnvService) {
-    const adapter = new PrismaMssql(env.get('DATABASE_URL'));
+    const adapter = new PrismaPg({ connectionString: env.get('DATABASE_URL') });
     super({ adapter });
   }
 
