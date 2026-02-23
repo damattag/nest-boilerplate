@@ -23,12 +23,6 @@ updates:
         patterns:
           - "@types/*"
 
-  - package-ecosystem: docker
-    directory: /
-    schedule:
-      interval: weekly
-      day: monday
-
   - package-ecosystem: github-actions
     directory: /
     schedule:
