@@ -115,7 +115,11 @@ export class LoggerService {
 
     for (let i = 0; i < pathKeys.length; i++) {
       const key = pathKeys[i];
-      const value = pathValues[i];
+      let value = pathValues[i];
+
+      if (Array.isArray(value)) {
+        value = value.join(',');
+      }
 
       url = url.replace(value, `:${key}`);
     }
