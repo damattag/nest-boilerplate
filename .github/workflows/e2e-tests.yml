@@ -1,0 +1,52 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    services:
+      postgres:
+        image: postgres:17
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: docker
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: nest_boilerplate
+
+    strategy:
+      matrix:
+        node-version: [24.11.1]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Run Tests
+        run: pnpm run test:e2e
+        env:
+          NODE_ENV: "test"
+          DATABASE_URL: "postgresql://docker:docker@db:5432/nest_boilerplate?schema=public"
+          JWT_ACCESS_SECRET: "access_secret"
+          JWT_REFRESH_SECRET: "refresh_secret"
