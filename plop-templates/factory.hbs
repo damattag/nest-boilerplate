@@ -1,12 +1,30 @@
 import { {{pascalCase name}}, {{pascalCase name}}Props } from "@/modules/{{dashCase name}}/domain";
+import { {{pascalCase name}}Mapper } from "@/modules/{{dashCase name}}/infra/database/mappers";
+import { PrismaService } from "@/shared/database";
 import { faker } from "@faker-js/faker";
+import { Injectable } from "@nestjs/common";
 
-export function make{{pascalCase name}}(overrrides: Partial<{{pascalCase name}}Props> = {}): {{pascalCase name}} {
+export function make{{pascalCase name}}(overrides: Partial<{{pascalCase name}}Props> = {}): {{pascalCase name}} {
   return {{pascalCase name}}.create({
     id: faker.string.uuid(),
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
     deletedAt: null,
-    ...overrrides
+    ...overrides
   })
+}
+
+@Injectable()
+export class {{pascalCase name}}Factory {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async makePrisma{{pascalCase name}}(data: Partial<{{pascalCase name}}Props> = {}): Promise<{{pascalCase name}}> {
+    const {{camelCase name}} = make{{pascalCase name}}(data);
+
+    await this.prisma.{{camelCase name}}.create({
+      data: {{pascalCase name}}Mapper.toPersistence({{camelCase name}}),
+    });
+
+    return {{camelCase name}};
+  }
 }

@@ -106,7 +106,15 @@ export default function (plop) {
         type: 'add',
         path: 'src/modules/{{dashCase name}}/application/use-cases/index.ts',
         templateFile: 'plop-templates/barrel-index.hbs',
-        data: { exports: ['{{dashCase name}}/create.usecase', '{{dashCase name}}/delete.usecase', '{{dashCase name}}/get-by-id.usecase', '{{dashCase name}}/list.usecase', '{{dashCase name}}/update.usecase'] },
+        data: {
+          exports: [
+            '{{dashCase name}}/create.usecase',
+            '{{dashCase name}}/delete.usecase',
+            '{{dashCase name}}/get-by-id.usecase',
+            '{{dashCase name}}/list.usecase',
+            '{{dashCase name}}/update.usecase',
+          ],
+        },
       },
 
       // Infra Controllers
@@ -137,9 +145,42 @@ export default function (plop) {
       },
       {
         type: 'add',
+        path: 'src/modules/{{dashCase name}}/infra/controllers/{{dashCase name}}/tests/create.controller.e2e-spec.ts',
+        templateFile: 'plop-templates/controllers/tests/create.e2e-spec.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/modules/{{dashCase name}}/infra/controllers/{{dashCase name}}/tests/delete.controller.e2e-spec.ts',
+        templateFile: 'plop-templates/controllers/tests/delete.e2e-spec.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/modules/{{dashCase name}}/infra/controllers/{{dashCase name}}/tests/get-by-id.controller.e2e-spec.ts',
+        templateFile: 'plop-templates/controllers/tests/get-by-id.e2e-spec.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/modules/{{dashCase name}}/infra/controllers/{{dashCase name}}/tests/list.controller.e2e-spec.ts',
+        templateFile: 'plop-templates/controllers/tests/list.e2e-spec.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/modules/{{dashCase name}}/infra/controllers/{{dashCase name}}/tests/update.controller.e2e-spec.ts',
+        templateFile: 'plop-templates/controllers/tests/update.e2e-spec.hbs',
+      },
+      {
+        type: 'add',
         path: 'src/modules/{{dashCase name}}/infra/controllers/index.ts',
         templateFile: 'plop-templates/barrel-index.hbs',
-        data: { exports: ['{{dashCase name}}/create.controller', '{{dashCase name}}/delete.controller', '{{dashCase name}}/get-by-id.controller', '{{dashCase name}}/list.controller', '{{dashCase name}}/update.controller'] },
+        data: {
+          exports: [
+            '{{dashCase name}}/create.controller',
+            '{{dashCase name}}/delete.controller',
+            '{{dashCase name}}/get-by-id.controller',
+            '{{dashCase name}}/list.controller',
+            '{{dashCase name}}/update.controller',
+          ],
+        },
       },
 
       // Infra DTOs
@@ -172,7 +213,15 @@ export default function (plop) {
         type: 'add',
         path: 'src/modules/{{dashCase name}}/infra/dtos/index.ts',
         templateFile: 'plop-templates/barrel-index.hbs',
-        data: { exports: ['{{dashCase name}}/create.dto', '{{dashCase name}}/delete.dto', '{{dashCase name}}/get-by-id.dto', '{{dashCase name}}/list.dto', '{{dashCase name}}/update.dto'] },
+        data: {
+          exports: [
+            '{{dashCase name}}/create.dto',
+            '{{dashCase name}}/delete.dto',
+            '{{dashCase name}}/get-by-id.dto',
+            '{{dashCase name}}/list.dto',
+            '{{dashCase name}}/update.dto',
+          ],
+        },
       },
 
       // Infra Database
@@ -210,8 +259,10 @@ export default function (plop) {
       {
         type: 'modify',
         path: 'src/app.module.ts',
-        pattern: /(import { UsersModule } from '.\/modules\/users\/users.module';)/g,
-        template: "$1\nimport { {{pascalCase name}}Module } from './modules/{{dashCase name}}/{{dashCase name}}.module';",
+        pattern:
+          /(import { UsersModule } from '.\/modules\/users\/users.module';)/g,
+        template:
+          "$1\nimport { {{pascalCase name}}Module } from './modules/{{dashCase name}}/{{dashCase name}}.module';",
       },
       {
         type: 'modify',
@@ -231,7 +282,7 @@ export default function (plop) {
         type: 'modify',
         path: 'src/shared/libs/nest/config/swagger-constants.ts',
         pattern: /(USERS = `\/users`,)/g,
-        template: "$1\n  {{constantCase name}} = `/{{dashCase name}}`,",
+        template: '$1\n  {{constantCase name}} = `/{{dashCase name}}`,',
       },
     ],
   });
