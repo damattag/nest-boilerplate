@@ -1,50 +1,44 @@
-import { envSchema } from '@/shared/services/env';
-import { PrismaClient } from '@/generated/prisma/client';
-import { config } from 'dotenv';
 import { execSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { config } from 'dotenv';
+import { PrismaClient } from '@/generated/prisma/client';
+import { envSchema } from '@/shared/services/env';
 
 config({
-	path: '.env',
-	override: true,
-});
-config({
-	path: '.env.test',
-	override: true,
+  path: '.env',
+  override: false,
 });
 
 const env = envSchema.parse(process.env);
 
-const adapter = new PrismaPg({
-	connectionString: env.DATABASE_URL,
-});
-const prisma = new PrismaClient({ adapter });
-
-
 function generateUniqueDatabaseURL(schemaId: string) {
-	if (!env.DATABASE_URL) {
-		throw new Error('DATABASE_URL is not set');
-	}
+  if (!env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is not set');
+  }
 
-	const url = new URL(env.DATABASE_URL);
+  const url = new URL(env.DATABASE_URL);
 
-	url.searchParams.set('schema', schemaId);
+  url.searchParams.set('schema', schemaId);
 
-	return url.toString();
+  return url.toString();
 }
 
 const schemaId = randomUUID();
+const databaseURL = generateUniqueDatabaseURL(schemaId);
+
+process.env.DATABASE_URL = databaseURL;
+
+const adapter = new PrismaPg({
+  connectionString: databaseURL,
+});
+const prisma = new PrismaClient({ adapter });
 
 beforeAll(async () => {
-	const databaseURL = generateUniqueDatabaseURL(schemaId);
-
-	env.DATABASE_URL = databaseURL;
-
-	execSync('npx prisma migrate deploy');
+  execSync('npx prisma migrate deploy');
 });
 
 afterAll(async () => {
-	await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`);
-	await prisma.$disconnect();
+  await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`);
+  await prisma.$disconnect();
 });

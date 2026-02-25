@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest run --watch",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "cross-env DATABASE_URL=postgresql://docker:docker@localhost:5432/nest_boilerplate?schema=public pnpm vitest run --config ./vitest.config.e2e.mts",
     "types:check": "tsc --noEmit",
     "db:pull": "prisma db pull",
     "db:generate": "prisma generate",

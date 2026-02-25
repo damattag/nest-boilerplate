@@ -1,7 +1,5 @@
 services:
   pg:
-    profiles:
-      - dev
     image: postgres:17
     container_name: pg
     ports:
@@ -19,21 +17,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  api:
-    profiles:
-      - prod
-    build:
-      context: .
-    ports:
-      - "4001:4001"
-    env_file:
-      - .env
-    environment:
-      - NODE_ENV=production
-      - SERVER_PORT=4001
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
 volumes:
   pgdata:
