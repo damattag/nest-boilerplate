@@ -3,14 +3,13 @@ import { randomUUID } from 'node:crypto';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { config } from 'dotenv';
 import { PrismaClient } from '@/generated/prisma/client';
-import { envSchema } from '@/shared/services/env';
 
 config({
   path: '.env',
   override: false,
 });
 
-const env = envSchema.parse(process.env);
+const env = process.env;
 
 function generateUniqueDatabaseURL(schemaId: string) {
   if (!env.DATABASE_URL) {

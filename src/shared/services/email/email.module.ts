@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { EnvModule } from '@/shared/services/env';
 import { EmailService } from './email.service';
-import { SendgridService } from './sendgrid.service';
+import { NodemailerService } from './nodemailer.service';
 
 @Module({
   imports: [EnvModule],
   providers: [
     {
       provide: EmailService,
-      useClass: SendgridService,
+      useClass: NodemailerService,
     },
   ],
   exports: [EmailService],

@@ -16,6 +16,11 @@ export const envSchema = z.object({
   SENDGRID_API_KEY: z.string(),
   SENDGRID_EMAIL: z.string(),
 
+  SMTP_HOST: z.string(),
+  SMTP_PORT: z.coerce.number(),
+  SMTP_USER: z.string(),
+  SMTP_PASS: z.string(),
+
   JWT_ACCESS_SECRET: z.string(),
   JWT_REFRESH_SECRET: z.string(),
 });

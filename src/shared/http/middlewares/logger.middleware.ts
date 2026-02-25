@@ -8,6 +8,12 @@ export class LoggerMiddleware implements NestMiddleware {
   private logger = new LoggerService();
 
   use(request: Request, response: Response, next: NextFunction): void {
+    const nodeEnv = process.env.NODE_ENV;
+
+    if (nodeEnv === 'test') {
+      return next();
+    }
+
     const { ip, method, baseUrl } = request;
     const userAgent = request.get('user-agent') || '';
 
