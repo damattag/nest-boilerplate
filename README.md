@@ -54,6 +54,7 @@ src/
 | `pnpm lint:ci` | Executa o linting no CI |
 | `pnpm test` | Executa a suíte de testes unitários com Vitest |
 | `pnpm test:watch` | Executa os testes em modo *watch* |
+| `pnpm test:e2e` | Executa a suíte de testes e2e com Vitest |
 | `pnpm test:coverage` | Gera relatório de cobertura de testes |
 | `pnpm types:check` | Executa a verificação de tipos |
 | `pnpm db:generate` | Sincroniza o cliente Prisma com o schema |
