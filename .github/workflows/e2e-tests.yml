@@ -50,6 +50,16 @@ jobs:
         run: pnpm run test:e2e
         env:
           NODE_ENV: "test"
+          
           DATABASE_URL: "postgresql://docker:docker@db:5432/nest_boilerplate?schema=public"
+          
           JWT_ACCESS_SECRET: "access_secret"
           JWT_REFRESH_SECRET: "refresh_secret"
+          
+          SENDGRID_EMAIL: "email@email.com"
+          SENDGRID_API_KEY: "SG.alguma-coisa"
+
+          SMTP_HOST: "smtp.gmail.com"
+          SMTP_PORT: 587
+          SMTP_USER: ""
+          SMTP_PASS: ""
