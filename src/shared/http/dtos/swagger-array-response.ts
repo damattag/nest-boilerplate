@@ -1,4 +1,3 @@
-import { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { z } from 'zod';
 
 const metaSchema = z.object({
@@ -17,7 +16,7 @@ export function swaggerArrayResponse<T extends z.ZodType>(
     ...(pagination && { meta: metaSchema }),
   });
 
-  const swaggerSchema = z.toJSONSchema(arraySchema) as SchemasObject;
+  const swaggerSchema = z.toJSONSchema(arraySchema) as Record<string, unknown>;
 
   return {
     swaggerSchema,

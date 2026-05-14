@@ -1,4 +1,3 @@
-import type { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import z from 'zod';
 import { ORDER_BY_USERS_FIELDS_ENUM } from '@/modules/users/application/repositories';
 import { paginationSchema } from '@/shared/http/dtos';
@@ -40,7 +39,7 @@ export const listUsersQueryParamsSwaggerSchema = z.toJSONSchema(
       .optional()
       .describe('Created at end of date range'),
   }),
-) as SchemasObject;
+) as Record<string, unknown>;
 
 const responseSchema = z.object({
   id: z.uuidv4().describe('User ID'),

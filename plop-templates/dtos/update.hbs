@@ -24,4 +24,4 @@ export type Update{{pascalCase name}}BodySchema = z.infer<typeof update{{pascalC
 
 export const update{{pascalCase name}}BodySwaggerSchema = z.toJSONSchema(
   update{{pascalCase name}}BodySchema,
-) as SchemasObject;
+)  as Record<string, unknown>;

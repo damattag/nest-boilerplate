@@ -1,4 +1,3 @@
-import type { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import z from 'zod';
 import { ZodValidationPipe } from '@/shared/http/pipes';
 
@@ -14,7 +13,7 @@ export const updateUserParamsValidationPipe = new ZodValidationPipe(
 
 export const updateUserParamsSwaggerSchema = z.toJSONSchema(
   updateUserParamsSchema,
-) as SchemasObject;
+) as Record<string, unknown>;
 
 const updateUserBodySchema = z
   .object({
@@ -31,7 +30,7 @@ export const updateUserBodyValidationPipe = new ZodValidationPipe(
 
 export const updateUserBodySwaggerSchema = z.toJSONSchema(
   updateUserBodySchema,
-) as SchemasObject;
+) as Record<string, unknown>;
 
 const updateUserResponseSchema = z.void();
 
