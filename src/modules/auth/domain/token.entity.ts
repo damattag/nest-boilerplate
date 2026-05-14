@@ -23,7 +23,12 @@ export class Token implements TokenProps {
   createdAt: Date;
 
   protected constructor(props: TokenProps) {
-    Object.assign(this, props);
+    this.id = props.id;
+    this.userId = props.userId;
+    this.code = props.code;
+    this.type = props.type;
+    this.expiresAt = props.expiresAt;
+    this.createdAt = props.createdAt;
   }
 
   static create(props: CreateTokenInput): Token {

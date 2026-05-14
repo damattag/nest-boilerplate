@@ -1,4 +1,3 @@
-import type { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import z from 'zod';
 import { ZodValidationPipe } from '@/shared/http/pipes';
 
@@ -14,7 +13,7 @@ export const deleteUserParamsValidationPipe = new ZodValidationPipe(
 
 export const deleteUserParamsSwaggerSchema = z.toJSONSchema(
   deleteUserParamsSchema,
-) as SchemasObject;
+) as Record<string, unknown>;
 
 const deleteUserResponseSchema = z.void();
 

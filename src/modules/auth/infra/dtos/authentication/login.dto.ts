@@ -1,4 +1,3 @@
-import { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { z } from 'zod/v4';
 import { ZodValidationPipe } from '@/shared/http/pipes';
 
@@ -11,9 +10,10 @@ export type LoginBodySchema = z.infer<typeof loginBodySchema>;
 
 export const loginBodyValidationPipe = new ZodValidationPipe(loginBodySchema);
 
-export const loginBodySwaggerSchema = z.toJSONSchema(
-  loginBodySchema,
-) as SchemasObject;
+export const loginBodySwaggerSchema = z.toJSONSchema(loginBodySchema) as Record<
+  string,
+  unknown
+>;
 
 const loginResponse = z.object({
   access: z.string().describe("User's access token"),
@@ -22,6 +22,7 @@ const loginResponse = z.object({
 
 export type LoginResponse = z.infer<typeof loginResponse>;
 
-export const loginResponseSwagger = z.toJSONSchema(
-  loginResponse,
-) as SchemasObject;
+export const loginResponseSwagger = z.toJSONSchema(loginResponse) as Record<
+  string,
+  unknown
+>;

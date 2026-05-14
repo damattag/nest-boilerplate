@@ -1,4 +1,3 @@
-import type { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/shared/http/pipes';
 
@@ -26,7 +25,7 @@ export type RegistrationBodySchema = z.infer<typeof registrationBodySchema>;
 
 export const registrationBodySwaggerSchema = z.toJSONSchema(
   registrationBodySchema,
-) as SchemasObject;
+) as Record<string, unknown>;
 
 const registrationResponse = z.void();
 

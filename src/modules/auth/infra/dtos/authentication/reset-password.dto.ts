@@ -1,4 +1,3 @@
-import { SchemasObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { z } from 'zod';
 import { ZodValidationPipe } from '@/shared/http/pipes';
 
@@ -16,4 +15,4 @@ export const resetPasswordBodyValidationPipe = new ZodValidationPipe(
 
 export const resetPasswordBodySwaggerSchema = z.toJSONSchema(
   ResetPasswordBodySchema,
-) as SchemasObject;
+) as Record<string, unknown>;

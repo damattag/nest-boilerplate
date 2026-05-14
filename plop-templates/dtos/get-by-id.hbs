@@ -20,4 +20,4 @@ export type Get{{pascalCase name}}ByIdResponseSchema = z.infer<typeof responseSc
 
 export const get{{pascalCase name}}ByIdResponseSwaggerSchema = z.toJSONSchema(
   responseSchema,
-) as SchemasObject;
+)  as Record<string, unknown>;

@@ -14,4 +14,4 @@ export type Create{{pascalCase name}}BodySchema = z.infer<typeof create{{pascalC
 
 export const create{{pascalCase name}}BodySwaggerSchema = z.toJSONSchema(
   create{{pascalCase name}}BodySchema,
-) as SchemasObject;
+)  as Record<string, unknown>;
