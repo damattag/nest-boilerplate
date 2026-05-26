@@ -42,7 +42,7 @@
     "@swc/core": "1.15.33",
     "bcryptjs": "3.0.3",
     "dotenv": "17.4.2",
-    "nodemailer": "8.0.7",
+    "nodemailer": "8.0.9",
     "passport-jwt": "4.0.1",
     "pg": "8.20.0",
     "reflect-metadata": "0.2.2",
