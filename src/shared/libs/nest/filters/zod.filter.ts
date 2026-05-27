@@ -23,11 +23,18 @@ export class ZodFilter implements ExceptionFilter {
 
     const status = HttpStatus.BAD_REQUEST;
 
-    const errorObj = {};
+    const errorObj = {} as Record<string, string[]>;
     for (const error of exception.issues) {
-      errorObj[error.path.join('.')] = error.message;
+      const key = error.path.join('.');
+
+      if (!errorObj[key]) {
+        errorObj[key] = [error.message];
+        continue;
+      }
+
+      errorObj[key].push(error.message);
     }
-    const message = JSON.stringify(errorObj, null, 2);
+    const message = JSON.stringify(errorObj);
 
     const body = request.body ? removeSensitiveData(request.body) : undefined;
     const params = request.params
