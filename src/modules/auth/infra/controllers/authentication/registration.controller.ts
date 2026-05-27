@@ -7,10 +7,9 @@ import {
 } from '@nestjs/swagger';
 import { RegistrationUseCase } from '@/modules/auth/application/use-cases';
 import {
-  type RegistrationBodySchema,
+  RegistrationBodyDto,
   type RegistrationResponse,
   registrationBodySwaggerSchema,
-  registrationBodyValidationPipe,
 } from '@/modules/auth/infra/dtos';
 import {
   ApiPaths,
@@ -30,7 +29,7 @@ export class RegistrationController {
   @ApiBody({ schema: registrationBodySwaggerSchema })
   @HttpCode(HttpStatus.CREATED)
   async handle(
-    @Body(registrationBodyValidationPipe) body: RegistrationBodySchema,
+    @Body() body: RegistrationBodyDto,
   ): Promise<RegistrationResponse> {
     await this.useCase.execute({
       name: body.name,

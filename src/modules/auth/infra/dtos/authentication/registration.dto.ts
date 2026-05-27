@@ -1,5 +1,5 @@
+import { createZodDto } from 'nest-swagger-zod';
 import { z } from 'zod';
-import { ZodValidationPipe } from '@/shared/http/pipes';
 
 const registrationBodySchema = z.object({
   name: z.string().describe('User name'),
@@ -17,11 +17,11 @@ const registrationBodySchema = z.object({
     .describe('User password'),
 });
 
-export const registrationBodyValidationPipe = new ZodValidationPipe(
-  registrationBodySchema,
-);
-
 export type RegistrationBodySchema = z.infer<typeof registrationBodySchema>;
+
+export class RegistrationBodyDto extends createZodDto<RegistrationBodySchema>(
+  registrationBodySchema,
+) {}
 
 export const registrationBodySwaggerSchema = z.toJSONSchema(
   registrationBodySchema,

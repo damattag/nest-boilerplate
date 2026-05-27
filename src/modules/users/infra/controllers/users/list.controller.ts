@@ -5,6 +5,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { ApiQueryParams } from 'nest-swagger-zod';
 import { ListUsersUseCase } from '@/modules/users/application/use-cases';
 import {
   type ListUsersQueryParamsSchema,
@@ -17,7 +18,6 @@ import {
   ApiPaths,
   SwaggerTags,
 } from '@/shared/libs/nest/config/swagger-constants';
-import { ApiQueryParams } from '@/shared/libs/nest/decorators/query-params.decorator';
 import { buildResponseMeta } from '@/shared/utils/build-response-meta';
 
 @ApiTags(SwaggerTags.USERS)
