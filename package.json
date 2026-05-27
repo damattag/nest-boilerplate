@@ -39,7 +39,7 @@
     "@prisma/client": "7.8.0",
     "@sendgrid/mail": "8.1.6",
     "@swc/cli": "0.8.1",
-    "@swc/core": "1.15.33",
+    "@swc/core": "1.15.40",
     "bcryptjs": "3.0.3",
     "dotenv": "17.4.2",
     "nest-swagger-zod": "1.1.1",
