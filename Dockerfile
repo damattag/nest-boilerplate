@@ -1,4 +1,4 @@
-FROM node:24.11.1-alpine AS base
+FROM node:24-alpine3.23 AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -6,7 +6,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN apk update && \
     apk add --no-cache openssl dumb-init
 
-RUN corepack enable
+RUN npm install -g pnpm@10.29.3
 
 FROM base AS deps
 

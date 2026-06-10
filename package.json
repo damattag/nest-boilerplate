@@ -4,7 +4,18 @@
   "description": "NestJS Boilerplate",
   "author": "damattag",
   "private": true,
+  "packageManager": "pnpm@10.29.3",
   "license": "UNLICENSED",
+  "pnpm": {
+    "overrides": {
+      "@hono/node-server@<1.19.13": ">=1.19.13"
+    },
+    "onlyBuiltDependencies": [
+      "@prisma/engines",
+      "@swc/core",
+      "prisma"
+    ]
+  },
   "scripts": {
     "build": "nest build",
     "start": "nest start",
