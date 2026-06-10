@@ -22,7 +22,7 @@ export class LoggerMiddleware implements NestMiddleware {
     const init = Date.now();
     const timestamp = new Date(init).toISOString();
 
-    const data = {
+    const data: Record<string, string | number | string[] | undefined> = {
       stage: 'START',
       method,
       url: baseUrl,
