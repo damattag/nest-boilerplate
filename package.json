@@ -27,7 +27,7 @@
     "gen": "plop module"
   },
   "dependencies": {
-    "@faker-js/faker": "10.4.0",
+    "@faker-js/faker": "10.5.0",
     "@nestjs/common": "11.1.26",
     "@nestjs/config": "4.0.4",
     "@nestjs/core": "11.1.26",
