@@ -15,8 +15,11 @@ export class NodemailerService implements EmailService {
       host: this.env.get('SMTP_HOST'),
       port: this.env.get('SMTP_PORT'),
       auth: {
+        type: 'OAuth2',
         user: this.env.get('SMTP_USER'),
-        pass: this.env.get('SMTP_PASS'),
+        clientId: this.env.get('GOOGLE_CLIENT_ID'),
+        clientSecret: this.env.get('GOOGLE_CLIENT_SECRET'),
+        refreshToken: this.env.get('GOOGLE_REFRESH_TOKEN'),
       },
     });
   }
